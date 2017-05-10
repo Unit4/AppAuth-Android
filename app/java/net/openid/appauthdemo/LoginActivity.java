@@ -51,6 +51,7 @@ import net.openid.appauth.ClientSecretBasic;
 import net.openid.appauth.RegistrationRequest;
 import net.openid.appauth.RegistrationResponse;
 import net.openid.appauth.ResponseTypeValues;
+import net.openid.appauth.UriParser;
 import net.openid.appauth.browser.AnyBrowserMatcher;
 import net.openid.appauth.browser.BrowserMatcher;
 import net.openid.appauth.browser.ExactBrowserMatcher;
@@ -427,7 +428,7 @@ public final class LoginActivity extends AppCompatActivity {
         mExecutor.execute(() -> {
             Log.i(TAG, "Warming up browser instance for auth request");
             CustomTabsIntent.Builder intentBuilder =
-                    mAuthService.createCustomTabsIntentBuilder(mAuthRequest.get().toUri());
+                    mAuthService.createCustomTabsIntentBuilder();
             intentBuilder.setToolbarColor(getColorCompat(R.color.colorPrimary));
             mAuthIntent.set(intentBuilder.build());
             mAuthIntentLatch.countDown();

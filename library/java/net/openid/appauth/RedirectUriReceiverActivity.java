@@ -15,6 +15,7 @@
 package net.openid.appauth;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 /**
@@ -44,6 +45,8 @@ import android.os.Bundle;
  */
 public class RedirectUriReceiverActivity extends Activity {
 
+    public static final String IS_FROM_REDIRECT_URI_ACTIVITY = "isFromRedirectUriActivity";
+
     @Override
     public void onCreate(Bundle savedInstanceBundle) {
         super.onCreate(savedInstanceBundle);
@@ -51,6 +54,8 @@ public class RedirectUriReceiverActivity extends Activity {
         // while this does not appear to be achieving much, handling the redirect in this way
         // ensures that we can remove the browser tab from the back stack. See the documentation
         // on AuthorizationManagementActivity for more details.
+        getIntent().putExtra(IS_FROM_REDIRECT_URI_ACTIVITY, true);
+
         startActivity(AuthorizationManagementActivity.createResponseHandlingIntent(
                 this, getIntent().getData()));
         finish();

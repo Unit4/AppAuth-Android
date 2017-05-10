@@ -24,7 +24,6 @@ import android.os.Bundle;
 import android.support.annotation.VisibleForTesting;
 
 import net.openid.appauth.AuthorizationException.AuthorizationRequestErrors;
-import net.openid.appauth.internal.Logger;
 
 import org.json.JSONException;
 
@@ -232,13 +231,13 @@ public class AuthorizationManagementActivity extends Activity {
     }
 
     private void handleAuthorizationComplete() {
-        Uri responseUri = getIntent().getData();
+        UriParser responseUri = new UriParser(getIntent().getData());
         Intent responseData = extractResponseData(responseUri);
         if (responseData == null) {
             Logger.error("Failed to extract OAuth2 response from redirect");
             return;
         }
-        responseData.setData(responseUri);
+        responseData.setData(getIntent().getData());
 
         Logger.debug("Authorization complete - invoking completion intent");
         try {
@@ -282,7 +281,7 @@ public class AuthorizationManagementActivity extends Activity {
         mCancelIntent = state.getParcelable(KEY_CANCEL_INTENT);
     }
 
-    private Intent extractResponseData(Uri responseUri) {
+    private Intent extractResponseData(UriParser responseUri) {
         if (responseUri.getQueryParameterNames().contains(AuthorizationException.PARAM_ERROR)) {
             return AuthorizationException.fromOAuthRedirect(responseUri).toIntent();
         } else {
@@ -291,7 +290,7 @@ public class AuthorizationManagementActivity extends Activity {
                     .build();
 
             if (mAuthRequest.state == null && response.state != null
-                    || (mAuthRequest.state != null && !mAuthRequest.state.equals(response.state))) {
+                    || (mAuthRequest.state != null && !response.state.contains(mAuthRequest.state))) {
                 Logger.warn("State returned in authorization response (%s) does not match state "
                         + "from request (%s) - discarding response",
                         response.state,

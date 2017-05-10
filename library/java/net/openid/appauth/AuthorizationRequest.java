@@ -28,8 +28,6 @@ import android.support.annotation.VisibleForTesting;
 import android.text.TextUtils;
 import android.util.Base64;
 
-import net.openid.appauth.internal.UriUtil;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 

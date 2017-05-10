@@ -23,12 +23,11 @@ import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsClient;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.customtabs.CustomTabsServiceConnection;
+import android.support.v4.util.Pair;
 
 import net.openid.appauth.AuthorizationException.GeneralErrors;
 import net.openid.appauth.browser.Browsers;
-import net.openid.appauth.browser.CustomTabManager;
 import net.openid.appauth.connectivity.ConnectionBuilder;
-import net.openid.appauth.internal.UriUtil;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -46,6 +45,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
@@ -116,8 +116,7 @@ public class AuthorizationServiceTest {
     @Mock PendingIntent mPendingIntent;
     @Mock Context mContext;
     @Mock CustomTabsClient mClient;
-    @Mock
-    CustomTabManager mCustomTabManager;
+    @Mock CustomTabManager mCustomTabManager;
 
     @Before
     @SuppressWarnings("ResourceType")
@@ -138,7 +137,7 @@ public class AuthorizationServiceTest {
         when(mHttpConnection.getOutputStream()).thenReturn(mOutputStream);
         when(mContext.bindService(serviceIntentEq(), any(CustomTabsServiceConnection.class),
                 anyInt())).thenReturn(true);
-        when(mCustomTabManager.createTabBuilder())
+        when(mCustomTabManager.createCustomTabsIntentBuilder())
                 .thenReturn(new CustomTabsIntent.Builder());
     }
 

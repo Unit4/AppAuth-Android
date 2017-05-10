@@ -25,6 +25,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import android.net.Uri;
+import android.support.compat.BuildConfig;
+
 import java.util.Collections;
 import org.junit.Before;
 import org.junit.Test;
@@ -84,7 +86,7 @@ public class AuthorizationResponseTest {
                 .setState(TEST_STATE)
                 .build();
         AuthorizationResponse authResponse = new AuthorizationResponse.Builder(authRequest)
-                .fromUri(TEST_URI, mClock)
+                .fromUri(new UriParser(TEST_URI), mClock)
                 .build();
         checkExpectedFields(authResponse);
     }

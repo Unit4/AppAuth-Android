@@ -19,8 +19,6 @@ import static net.openid.appauth.Preconditions.checkNotNull;
 
 import android.util.Base64;
 
-import net.openid.appauth.internal.Logger;
-
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
